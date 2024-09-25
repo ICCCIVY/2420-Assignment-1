@@ -114,6 +114,62 @@ cat ~/.ssh/do-key.pub
 
 8. After adding the key, you should see it listed in the SSH Keys section. This confirms that your SSH key is now associated with your account and ready to use for connecting to your droplets.
 
+## 3. Creating a Project and Droplet in DigitalOcean
+
+In this step, youwill create a project in DigitalOcean to organize your resources. You will also create a droplet, which is a virtual private server that will run your applications.
+
+To create project: 
+1. In the DigitalOcean dashboard, click on "+ New Project" located on the left side bar. 
+
+2. In the "Project Name" field, enter a name for your project (e.g., "My Arch Linux Server").
+- You can optionally add a description to help you remember what this project is about.
+
+3. Click "Create Project" to save your new project.
+
+4. You should see your created project appear on the left side bar under "Projects" .
+
+To created a droplet:
+
+1. From your project dashboard, click the "Create“ button and select "Droplets" in the dropdown menu. 
+
+2. In the "Choose Region" section, choose San Francisco as this is the closest region to Vancouver.
+
+3. Under the "Choose an image" section, select "Custom images", click "Add image" and upload the Arch Linux that you have previously downloaded. 
+
+4. In the "Choose a plan" section, select the plan that suits your needs. 
+
+5. Under the "Authentication" section, choose the "SSH Keys" option, and select the SSH key you added earlier from the list.
+
+6. You can You can **optionally** choose additional settings like enabling backups, adding block based on your needs. 
+
+7. Click the "Create Droplet" button at the bottom when you’re satisfied with your settings. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Glossry
+droplet  
+ssh key
+
+
 
 
 
