@@ -92,6 +92,36 @@ ls ~/.ssh
 ```
 You should see `do-key` (the private key) and `do-key.pub` (the public key) listed.
 
+## 2. Adding SSH Key to DigitalOcean
+
+After creating your SSH key pair, the next step is to add the public key to your DigitalOcean account. This allows you to securely connect to your droplets without needing to enter a password.
+
+1. Copy your SSH public key: On your terminal, run the following command to direclty copy your public key:
+```
+cat ~/.ssh/do-key.pub
+```
+2. Once copied your key, log in to your DigitalOcean account (https://www.digitalocean.com/)
+
+3. In the DigitalOcean dashboard, click on the "Settings" option in the left sidebar.
+
+4. Then, select "Security" tab at the top.
+
+5. Look for the "Add SSH Key" button and click it.
+
+6. Paste your copied public key in the provied text box. In the "Name your key" field, give a recognizable name for your key. 
+
+7. Click "Add SSH key" button to save your to save your public key to your DigitalOcean account.
+
+8. After adding the key, you should see it listed in the SSH Keys section. This confirms that your SSH key is now associated with your account and ready to use for connecting to your droplets.
+
+
+
+
+
+
+
+
+
 
 
 
