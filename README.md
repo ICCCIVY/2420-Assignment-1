@@ -243,10 +243,61 @@ Then press Ctrl + X to exit the editor.
 
 Now that your cloud-init.yaml file is saved and properly formatted, you can proceed with creating a Droplet using this configuration!
 
+## 6. Creating a Droplet Using doctl with the cloud-init File
+
+With your cloud-init configuration file ready, you can use it to create a new DigitalOcean Droplet. This will automate the initial setup, such as creating a user, installing packages, and configuring security settings.
+
+Reminder: Before creating a droplet, make sure you have the follong set up: 
+- You have doctl installed and configured on your local machine (covered in Step 4).
+- You have a cloud-init YAML file (cloud-init.yaml) ready with your desired configuration (covered in Step 5).
+- You have a DigitalOcean API token added and authenticated with doctl.
+
+1. To creat a droplet,run the following command:
+```
+doctl compute droplet create "my-arch-droplet" \
+--size s-1vcpu-1gb \
+--region sfo3 \
+--image <YOUR-CUSTOM-IMAGE-ID> \
+--ssh-keys <YOUR-SSH-KEY-ID> \
+--user-data-file cloud-init.yaml \
+--wait
+```
+- "my-arch-droplet": Replace this with your desired droplet name.
+- "nyc3": Replace this with your desired region. For example, use "sfo3" for San Francisco or "nyc3" for New York.
+- "s-1vcpu-1gb": Replace this with the droplet size you need. For a basic plan, this example uses a droplet with 1 vCPU and 1 GB of RAM.
+- "arch-linux-iso": Replace this with the image slug or ID for your custom Arch Linux image.  
+
+    - If you don't remember the exact image ID (or slug) for your custom Arch Linux image, you can list all available images using the following command:
+    ```
+    doctl compute image list-user
+    ```
+    This will show a table of all custom images associated with your account. Look for the column labeled ID or Slug and find the corresponding value for your Arch Linux image. Use this value in the --image option of the droplet creation command.
+
+- "<your-ssh-key-fingerprint>": Replace this with your SSH key fingerprint. You can find this value using the command doctl compute ssh-key list.
+- --user-data-file cloud-init.yaml: This option specifies the path to your cloud-init configuration file.
+- --wait: This option waits for the droplet to be fully created before returning control to your terminal.
+
+Example here
+
+2. Verify the Droplet Creation
+
+After executing the command, you will see the progress and the details of your new droplet, including its public IP address.
+
+You can also use this command to list all your droplets and verify that the new one has been created successfully:
+```
+doctl compute droplet list
+```
+3. Connecting to Your Droplet
+
+Once the droplet is created and active, you can connect to it using SSH with the following command:
+```
+ssh user-name@<droplet-ip>
+```
+- Replace user-name with the username you specified in the cloud-init.yaml file.
+- Replace <droplet-ip> with the public IP address of your droplet, which you will find in the output of the droplet creation command or the doctl compute droplet list command.  
 
 
-
-
+Congratulations! You have successfully created a new DigitalOcean droplet using the doctl command-line tool and your cloud-init configuration. 
 
 
 
