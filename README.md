@@ -44,9 +44,12 @@ In this tutorial, you will be guided through the process of creating and managin
 
 4. Installing `doctl` Command-line Tool
 
-5. Creating a Droplet Using `doctl`
+5. Creating cloud-init file
 
-6. Using cloud-init to Configure Your Droplet
+6. Creating a Droplet Using doctl (with the cloud-init file)
+
+
+
 
 7. <mark>add more
 
@@ -100,7 +103,7 @@ After creating your SSH key pair, the next step is to add the public key to your
 ```
 cat ~/.ssh/do-key.pub
 ```
-2. Once copied your key, log in to your DigitalOcean account (https://www.digitalocean.com/)
+2. Once copied your key, log in to your [DigitalOcean](https://www.digitalocean.com/) account. 
 
 3. In the DigitalOcean dashboard, click on the "Settings" option in the left sidebar.
 
@@ -144,21 +147,49 @@ To created a droplet:
 
 7. Click the "Create Droplet" button at the bottom when you’re satisfied with your settings. 
 
+8. You can view your droplet under "Resources" tab in your project homepage. 
 
+## 4. Installing `doctl` Command-line Tool
 
+### What is `doctl`
 
+- `doctl` is the official DigitalOcean command line interface (CLI). It allows you to interact with the DigitalOcean API via the command line. 
 
+### Why Install `doctl`
+- It supports most functionality found in the control panel. You can create, configure, and destroy DigitalOcean resources like Droplets, Kubernetes clusters, firewalls, load balancers, database clusters, domains, and more.
+https://docs.digitalocean.com/reference/doctl/
 
+1. To install the latest version of doctl using Homebrew on macOS, run:
+```
+brew install doctl
+```
+2. Create an API token
+- Create a [DigitalOcean API token](https://docs.digitalocean.com/reference/api/create-personal-access-token/) for your account with read and write access from the Applications & API page in the control panel. The token string is only displayed once, so save it in a safe place
 
+3. Use the API token to grant account access to doctl
 
+- Use the API token to grant doctl access to your DigitalOcean account. Pass in the token string when prompted by doctl auth init, and give this authentication context a name.
+```
+doctl auth init --context <NAME>
+```
+- Authentication contexts let you switch between multiple authenticated accounts. You can repeat steps 2 and 3 to add other DigitalOcean accounts, then list and switch between authentication contexts
+```
+doctl auth list
+doctl auth switch --context <NAME>
+```
+4. Validate that doctl is working
 
+Now that doctl is authorized to use your account, try some test commands.
 
-
-
-
-
-
-
+To confirm that you have successfully authorized doctl, review your account details by running:
+```
+doctl account get
+```
+If successful, the output looks like:
+```
+Email                      Droplet Limit    Email Verified    UUID                                        Status
+sammy@example.org          10               true              3a56c5e109736b50e823eaebca85708ca0e5087c    active
+```
 
 
 
