@@ -191,6 +191,60 @@ Email                      Droplet Limit    Email Verified    UUID              
 sammy@example.org          10               true              3a56c5e109736b50e823eaebca85708ca0e5087c    active
 ```
 
+## 5. Creating cloud-init file
+
+### What is cloud-init?
+- Cloud-init is a widely used tool for initializing cloud instances across various platforms. It automatically configures systems during the first boot by detecting the cloud environment and setting up essential aspects such as networking, storage, SSH keys, and packages.
+
+### Why use Cloud-init?
+- Cloud-init allows us to set up a server with initial configurations quickly. For instance, after creating and connecting to servers, we often need to run a few commands to update and install packages. While this will not take long time for one server, configuring 10 or 100 servers can be time-consuming.
+- The easiest way to apply server configurations with cloud-init is through a config file, which is simply a YAML file. YAML is a human-friendly data serialization language for all programming languages.This allows for automated and consistent setup across multiple servers, saving time and reducing manual effort.
+
+1. To Create a Cloud-Init FIle:
+While logged into your droplet, use a text editor to create a new file named cloud-init.yaml. You can use nano, vim, or any other text editor you prefer. For example:
+```
+nano cloud-init.yaml
+```
+2. In the cloud-init.yaml file, you will define the settings you want for your droplet. Simply copy and paste the following example into your cloud-init configuration file and make changes as needed. 
+```
+#cloud-config
+users:
+  - name: user-name     #change to your desired name
+    primary_group: group-name    #The primary group for the user
+    groups: wheel     #Additional groups, granting sudo privileges
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']     #Default shell for the user
+    ssh-authorized-keys:
+      - ssh-ed25519 ...    #Replace with your actual SSH public key
+
+packages:
+  - ripgrep
+  - rsync
+  - neovim
+  - fd
+  - less
+  - man-db
+  - bash-completion
+  - tmux
+
+disable_root: true     #Disable root login via SSH for enhanced security
+```
+3. Save and Exit the File:
+
+If you're using Vim:
+
+Press Esc to enter command mode.
+Type :wq (stands for write and quit) and then press Enter. This will save the file and exit the editor.
+
+If you're using Nano:
+
+Press Ctrl + O to save the file. You’ll be prompted to confirm the filename (just press Enter).
+Then press Ctrl + X to exit the editor.
+
+Now that your cloud-init.yaml file is saved and properly formatted, you can proceed with creating a Droplet using this configuration!
+
+
+
 
 
 
@@ -199,6 +253,7 @@ sammy@example.org          10               true              3a56c5e109736b50e8
 ## Glossry
 droplet  
 ssh key
+API token," "YAML," "sudo
 
 
 
