@@ -34,7 +34,7 @@ In this tutorial, you will be guided through the process of creating and managin
 
 - Yoy have download the appropriate [Arch Linux](https://gitlab.archlinux.org/archlinux/arch-boxes/-/packages/)  image.  You want the most recent "cloudimg". The ".qcow2" like in the image below, the date may be different. Download the most recent image.
 
-![Arch Image](2420-Assignment-1/assets/arch-linux.png)
+![Arch Image](assets/arch-linux.png)
 
 ## Table of Contents
 
@@ -95,6 +95,9 @@ C "your_email@example.com": Adds a label to your key, typically your email addre
 ```
 ls ~/.ssh
 ```
+Output will look like this  
+
+![list key](assets/list-key.png)
 You should see `do-key` (the private key) and `do-key.pub` (the public key) listed.
 
 ## 2. Adding SSH Key to DigitalOcean
@@ -107,15 +110,15 @@ cat ~/.ssh/do-key.pub
 ```
 2. Once copied your key, log in to your [DigitalOcean](https://www.digitalocean.com/) account. 
 
-3. In the DigitalOcean dashboard, click on the "Settings" option in the left sidebar.
+3. In the DigitalOcean dashboard, click on the **Settings** option in the left sidebar.
 
-4. Then, select "Security" tab at the top.
+4. Then, select **Security** tab at the top.
 
-5. Look for the "Add SSH Key" button and click it.
+5. Look for the **Add SSH Key** button and click it.
 
-6. Paste your copied public key in the provied text box. In the "Name your key" field, give a recognizable name for your key. 
+6. Paste your copied public key in the provied text box. In the **Name your key** field, give a recognizable name for your key. 
 
-7. Click "Add SSH key" button to save your to save your public key to your DigitalOcean account.
+7. Click **Add SSH key** button to save your public key to your DigitalOcean account.
 
 8. After adding the key, you should see it listed in the SSH Keys section. This confirms that your SSH key is now associated with your account and ready to use for connecting to your droplets.
 
@@ -124,32 +127,43 @@ cat ~/.ssh/do-key.pub
 In this step, you will create a project in DigitalOcean to organize your resources. You will also create a droplet, which is a virtual private server that will run your applications.
 
 To create project: 
-1. In the DigitalOcean dashboard, click on "+ New Project" located on the left side bar. 
+1. In the DigitalOcean dashboard, click on **+ New Project** located on the left side bar. 
 
-2. In the "Project Name" field, enter a name for your project.
+2. In the **Project Name** field, enter a name for your project.
 - You can optionally add a description to help you remember what this project is about.
 
-3. Click "Create Project" to save your new project.
+3. Click **Create Projec** to save your new project.
 
-4. You should see your created project appear on the left side bar under "Projects" .
+4. You should see your created project appear on the left side bar under **Projects** .
+![project](assets/create-project.png)
 
 To created a droplet:
 
-1. From your project dashboard, click the "Create“ button and select "Droplets" in the dropdown menu. 
+1. From your project dashboard, click the **Create** button and select **Droplets** in the dropdown menu. 
 
-2. In the "Choose Region" section, choose San Francisco as this is the closest region to Vancouver.
+![create droplet](assets/create-droplet.png)
 
-3. Under the "Choose an image" section, select "Custom images", click "Add image" and upload the Arch Linux that you have previously downloaded. 
+2. In the **Choose Region** section, select a region that is geographically closest to you.
 
-4. In the "Choose a plan" section, select the plan that suits your needs. 
+![region](assets/region.png)
 
-5. Under the "Authentication" section, choose the "SSH Keys" option, and select the SSH key you added earlier from the list.
+3. Under the **Choose an image** section, select **Custom images**, click **Add image** and upload the Arch Linux that you have previously downloaded. 
 
-6. You can You can **optionally** choose additional settings like enabling backups, adding block based on your needs. 
+![image](assets/choose-image.png)
 
-7. Click the "Create Droplet" button at the bottom when you’re satisfied with your settings. 
+4. In the **Choose a plan** section, select the plan that suits your needs. 
 
-8. You can view your droplet under "Resources" tab in your project homepage. 
+5. Under the **Authentication** section, choose the **SSH Keys** option, and select the SSH key you added earlier from the list.
+
+![auth](assets/add-ssh-key.png)
+
+6. You can optionally choose additional settings like enabling backups, adding block based on your needs. 
+
+7. Click the **Create Droplet** button at the bottom when you’re satisfied with your settings. 
+
+8. You can view your droplet under **Resource** tab in your project homepage. 
+
+![droplet](assets/create-droplet2.png)
 
 ## 4. Installing `doctl` Command-line Tool
 
