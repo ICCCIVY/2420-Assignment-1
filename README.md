@@ -32,7 +32,9 @@ In this tutorial, you will be guided through the process of creating and managin
 
 - You have a Basic Knowledge of Linux.
 
-- <mark>add more</mark>
+- Yoy have download the appropriate [Arch Linux](https://gitlab.archlinux.org/archlinux/arch-boxes/-/packages/)  image.  You want the most recent "cloudimg". The ".qcow2" like in the image below, the date may be different. Download the most recent image.
+
+![Arch Image](2420-Assignment-1/assets/arch-linux.png)
 
 ## Table of Contents
 
@@ -119,12 +121,12 @@ cat ~/.ssh/do-key.pub
 
 ## 3. Creating a Project and Droplet in DigitalOcean
 
-In this step, youwill create a project in DigitalOcean to organize your resources. You will also create a droplet, which is a virtual private server that will run your applications.
+In this step, you will create a project in DigitalOcean to organize your resources. You will also create a droplet, which is a virtual private server that will run your applications.
 
 To create project: 
 1. In the DigitalOcean dashboard, click on "+ New Project" located on the left side bar. 
 
-2. In the "Project Name" field, enter a name for your project (e.g., "My Arch Linux Server").
+2. In the "Project Name" field, enter a name for your project.
 - You can optionally add a description to help you remember what this project is about.
 
 3. Click "Create Project" to save your new project.
