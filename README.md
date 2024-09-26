@@ -179,23 +179,26 @@ https://docs.digitalocean.com/reference/doctl/
 ```
 brew install doctl
 ```
+- You can check if doctl has been installed on your system, by running the following command in your terminal:
+```
+doctl version
+```
+![doctl](assets/view-doctl.png)
+
 2. Create an API token
 - Create a [DigitalOcean API token](https://docs.digitalocean.com/reference/api/create-personal-access-token/) for your account with read and write access from the Applications & API page in the control panel. The token string is only displayed once, so save it in a safe place
 
-3. Use the API token to grant account access to doctl
+![token](assets/token.png)
 
-- Use the API token to grant doctl access to your DigitalOcean account. Pass in the token string when prompted by doctl auth init, and give this authentication context a name.
+3. To initialize doctl with the API Token, run the following command:
 ```
-doctl auth init --context <NAME>
+doctl auth init 
 ```
-- Authentication contexts let you switch between multiple authenticated accounts. You can repeat steps 2 and 3 to add other DigitalOcean accounts, then list and switch between authentication contexts
-```
-doctl auth list
-doctl auth switch --context <NAME>
-```
+You will be prompted to enter your API token. Paste the token you copied earlier into the terminal.
+
+![init doctl](assets/init-doctl.png)
+
 4. Validate that doctl is working
-
-Now that doctl is authorized to use your account, try some test commands.
 
 To confirm that you have successfully authorized doctl, review your account details by running:
 ```
@@ -206,6 +209,9 @@ If successful, the output looks like:
 Email                      Droplet Limit    Email Verified    UUID                                        Status
 sammy@example.org          10               true              3a56c5e109736b50e823eaebca85708ca0e5087c    active
 ```
+For example: 
+
+![doctl account](assets/doctl-account-get.png)
 
 ## 5. Creating cloud-init file
 
