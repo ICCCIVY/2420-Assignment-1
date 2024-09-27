@@ -224,7 +224,7 @@ Output will look like this:
 
 You may wonder why we are installing `doctl` using AUR and `yay`?
 
--Since doctl is not included in the official Arch Linux repositories, we need to use the AUR to install it. AUR helpers like yay make it easier to install and manage these packages, so you don't have to manually download and compile them.
+- Since doctl is not included in the official Arch Linux repositories, we need to use the AUR to install it. AUR helpers like yay make it easier to install and manage these packages, so you don't have to manually download and compile them.
 
 4. Create an API token
 - Create a [DigitalOcean API token](https://docs.digitalocean.com/reference/api/create-personal-access-token/) for your account with read and write access from the Applications & API page in the control panel. The token string is only displayed once, so save it in a safe place
@@ -249,7 +249,7 @@ If successful, the output looks like:
 
 ![doctl account](assets/account.png)
 
-## 5. Creating cloud-init file
+## 5. Creating Cloud-Init File
 
 ### What is cloud-init?
 - Cloud-init is a widely used tool for initializing cloud instances across various platforms. It automatically configures systems during the first boot by detecting the cloud environment and setting up essential aspects such as networking, storage, SSH keys, and packages.
@@ -258,12 +258,8 @@ If successful, the output looks like:
 - Cloud-init allows us to set up a server with initial configurations quickly. For instance, after creating and connecting to servers, we often need to run a few commands to update and install packages. While this will not take long time for one server, configuring 10 or 100 servers can be time-consuming.
 - The easiest way to apply server configurations with cloud-init is through a config file, which is simply a YAML file. YAML is a human-friendly data serialization language for all programming languages.This allows for automated and consistent setup across multiple servers, saving time and reducing manual effort.
 
- Before create a Cloud-Init file, If you do not have nano or vim installed, You can install one of these text editors using the package manager. Here’s how to do it:   
- 1. Update the package list:
- ```
- sudo pacman -Syu
-```
-2. Install nano or vim:
+1. Before creating a cloud-init file, install a text editor like Vim or Nano.  
+
 - To install nano, run:
 ```
 sudo pacman -S nano
@@ -272,17 +268,14 @@ sudo pacman -S nano
 ```
 sudo pacman -S vim
 ```
-Now you can create the cloud-init file by running 
+Now you can create a yaml file by running:
 ```
 vim cloud-init.yaml
 ```
-OR 
+Note: This guide will use vim for demonstration.
 
-```
-nano cloud-init.yaml
-```
+2. In the cloud-init.yaml file, you will define the settings you want for your droplet. Simply copy and paste the following example into your cloud-init configuration file and make changes as needed. Press `i` on your keyboard to start typing.
 
-2. In the cloud-init.yaml file, you will define the settings you want for your droplet. Simply copy and paste the following example into your cloud-init configuration file and make changes as needed. 
 ```
 #cloud-config
 users:
@@ -306,17 +299,15 @@ packages:
 
 disable_root: true     #Disable root login via SSH for enhanced security
 ```
+
+For example:
+
+![yaml](assets/yaml.png)
+
 3. Save and Exit the File:
 
-If you're using Vim:
-
-Press Esc to enter command mode.
-Type :wq (stands for write and quit) and then press Enter. This will save the file and exit the editor.
-
-If you're using Nano:
-
-Press Ctrl + O to save the file. You’ll be prompted to confirm the filename (just press Enter).
-Then press Ctrl + X to exit the editor.
+Press `Esc` to enter command mode.
+Type `:wq` (stands for write and quit) and then press Enter. This will save the file and exit the editor.
 
 Now that your cloud-init.yaml file is saved and properly formatted, you can proceed with creating a Droplet using this configuration!
 
@@ -324,64 +315,74 @@ Now that your cloud-init.yaml file is saved and properly formatted, you can proc
 
 With your cloud-init configuration file ready, you can use it to create a new DigitalOcean Droplet. This will automate the initial setup, such as creating a user, installing packages, and configuring security settings.
 
-Reminder: Before creating a droplet, make sure you have the follong set up: 
-- You have doctl installed and configured on your local machine (covered in Step 4).
-- You have a cloud-init YAML file (cloud-init.yaml) ready with your desired configuration (covered in Step 5).
+Reminder: Before creating a droplet, make sure you have the following set up: 
+
+- You have doctl installed and configured on your local machine (covered in Step 5).
+- You have a cloud-init YAML file (cloud-init.yaml) ready with your desired configuration (covered in Step 6).
 - You have a DigitalOcean API token added and authenticated with doctl.
 
-1. To creat a droplet,run the following command:
+1. To create a droplet,run the following command:
 ```
-doctl compute droplet create "my-arch-droplet" \
---size s-1vcpu-1gb \
---region sfo3 \
---image <YOUR-CUSTOM-IMAGE-ID> \
---ssh-keys <YOUR-SSH-KEY-ID> \
---user-data-file cloud-init.yaml \
---wait
+doctl compute droplet create your-droplet-name \
+  --size s-1vcpu-1gb \
+  --image arch-linux \
+  --region nyc1 \
+  --ssh-keys your-ssh-key-id \
+  --user-data cloud-init.yml
 ```
-- "my-arch-droplet": Replace this with your desired droplet name.
-- "nyc3": Replace this with your desired region. For example, use "sfo3" for San Francisco or "nyc3" for New York.
-- "s-1vcpu-1gb": Replace this with the droplet size you need. For a basic plan, this example uses a droplet with 1 vCPU and 1 GB of RAM.
-- "arch-linux-iso": Replace this with the image slug or ID for your custom Arch Linux image.  
+`your-droplet-name`: Replace with your desired droplet name.  
+`size`: Choose the droplet size (e.g., s-1vcpu-1gb).  
+`image`: Image ID for the Arch Linux image.  
+`region`: Specify the region for the droplet (e.g., nyc1).  
+`ssh-keys`: Provide the SSH key ID.  
+`user-data`: Point to your cloud-init configuration file (cloud-init.yml).
 
-    - If you don't remember the exact image ID (or slug) for your custom Arch Linux image, you can list all available images using the following command:
+- To locate your image ID, run the following command:
     ```
     doctl compute image list-user
     ```
-    This will show a table of all custom images associated with your account. Look for the column labeled ID or Slug and find the corresponding value for your Arch Linux image. Use this value in the --image option of the droplet creation command.
+    This will show a table of all custom images associated with your account. Look for the column labeled ID and find the corresponding value for your Arch Linux image.
 
-- "<your-ssh-key-fingerprint>": Replace this with your SSH key fingerprint. You can find this value using the command doctl compute ssh-key list.
-- --user-data-file cloud-init.yaml: This option specifies the path to your cloud-init configuration file.
-- --wait: This option waits for the droplet to be fully created before returning control to your terminal.
-
-Example here
+- To locate your SSH key ID, run the following command:
+```
+doctl compute ssh-key list
+```
+For example:
+![droplet](assets/new-droplet.png)
 
 2. Verify the Droplet Creation
 
-After executing the command, you will see the progress and the details of your new droplet, including its public IP address.
-
-You can also use this command to list all your droplets and verify that the new one has been created successfully:
+You can use the following command to list all your droplets and verify that the new one has been created:
 ```
 doctl compute droplet list
 ```
+
+Output will look like this:
+
+![verify](assets/verify.png)
+
+You can see that our new droplet **linux-droplet** has been created successfully!
+
+
 3. Connecting to Your Droplet
 
 Once the droplet is created and active, you can connect to it using SSH with the following command:
 ```
-ssh user-name@<droplet-ip>
+ssh -i .ssh/2420assign1 arch@your-droplets-ip-address
 ```
-- Replace user-name with the username you specified in the cloud-init.yaml file.
-- Replace <droplet-ip> with the public IP address of your droplet, which you will find in the output of the droplet creation command or the doctl compute droplet list command.  
+- Replace **your-droplets-ip-address** with the public IP address of your new droplet.
+- Make sure to type `exit` and press `enter` to exit your previous SSH connect. 
+
+Output will look like this:
+
+![final-output](assets/final.png)
 
 
 Congratulations! You have successfully created a new DigitalOcean droplet using the doctl command-line tool and your cloud-init configuration. 
 
 
 
-## Glossry
-droplet  
-ssh key
-API token," "YAML," "sudo
+
 
 
 
