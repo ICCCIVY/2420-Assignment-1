@@ -1,5 +1,5 @@
-# 2420-Assignment-1 
----
+# ACIT 2420 Assignment 1 
+
 Name: Qiyu (Ivy) Chen  
 
 StudentID: A01338328
@@ -9,8 +9,6 @@ StudentID: A01338328
 # Setting up a  Remote Sever with DigitalOcean  
 
 ## Learning Objecitves:
-
-In this tutorial, you will be guided through the process of creating and managing a remote server using DigitalOcean. You will learn how to install and configure doctl on an existing droplet, generate SSH keys, and use them to securely connect to a remote server. Additionally, you will create a Droplet running Arch Linux, configure it with doctl and cloud-init, and apply best practices for server management and security.<mark>(to be changed)
 
  By compeleting this tutorial, you will learn: 
 
@@ -44,11 +42,13 @@ In this tutorial, you will be guided through the process of creating and managin
 
 3. Creating a Project and Droplet in DigitalOcean
 
-4. Installing `doctl` Command-line Tool
+4. Connect to Your Droplet via SSH
 
-5. Creating cloud-init file
+5. Installing `doctl` Command-line Tool
 
-6. Creating a Droplet Using doctl (with the cloud-init file)
+6. Creating cloud-init file
+
+7. Creating a Droplet Using doctl (with the cloud-init file)
 
 
 
@@ -79,12 +79,12 @@ To create a SSH key pair on your local machine:
 
 2. Run the following command to create your SSH key pair:
 ```
-ssh-keygen -t ed25519 -f ~/.ssh/do-key -C "your_email@example.com"
+ssh-keygen -t ed25519 -f ~/.ssh/2420assignment1 -C "your_email@example.com"
 ```
 
 t ed25519: Specifies the type of key to create (ed25519 is recommended for security).
 
-f ~/.ssh/do-key: Specifies the file in which to save the private key. The public key will be saved with the same name but with a .pub extension.
+f ~/.ssh/2420assignment1: Specifies the file in which to save the private key. The public key will be saved with the same name but with a .pub extension.
 
 C "your_email@example.com": Adds a label to your key, typically your email address. 
 
@@ -98,7 +98,9 @@ ls ~/.ssh
 Output will look like this  
 
 ![list key](assets/list-key.png)
-You should see `do-key` (the private key) and `do-key.pub` (the public key) listed.
+
+You should see **2420assign1** (the private key) and **2420assign1.pub** (the public key) listed.
+
 
 ## 2. Adding SSH Key to DigitalOcean
 
@@ -106,7 +108,7 @@ After creating your SSH key pair, the next step is to add the public key to your
 
 1. Copy your SSH public key: On your terminal, run the following command to direclty copy your public key:
 ```
-cat ~/.ssh/do-key.pub
+pbcopy < ~/.ssh/2420assign1.pub
 ```
 2. Once copied your key, log in to your [DigitalOcean](https://www.digitalocean.com/) account. 
 
@@ -132,86 +134,120 @@ To create project:
 2. In the **Project Name** field, enter a name for your project.
 - You can optionally add a description to help you remember what this project is about.
 
-3. Click **Create Projec** to save your new project.
+3. Click **Create Projec** to save your new project.  
 
-4. You should see your created project appear on the left side bar under **Projects** .
+4. You should see your created project appear on the left side bar under **Projects**.  
+
 ![project](assets/create-project.png)
 
 To created a droplet:
 
 1. From your project dashboard, click the **Create** button and select **Droplets** in the dropdown menu. 
 
-![create droplet](assets/create-droplet.png)
-
 2. In the **Choose Region** section, select a region that is geographically closest to you.
 
-![region](assets/region.png)
-
 3. Under the **Choose an image** section, select **Custom images**, click **Add image** and upload the Arch Linux that you have previously downloaded. 
-
-![image](assets/choose-image.png)
 
 4. In the **Choose a plan** section, select the plan that suits your needs. 
 
 5. Under the **Authentication** section, choose the **SSH Keys** option, and select the SSH key you added earlier from the list.
 
-![auth](assets/add-ssh-key.png)
-
 6. You can optionally choose additional settings like enabling backups, adding block based on your needs. 
 
 7. Click the **Create Droplet** button at the bottom when you’re satisfied with your settings. 
 
-8. You can view your droplet under **Resource** tab in your project homepage. 
+8. You can view your droplet under **Resource** tab in your project homepage.  
 
-![droplet](assets/create-droplet2.png)
+![droplet](assets/create-droplet.png)
 
-## 4. Installing `doctl` Command-line Tool
+## 4. Connect to Your Droplet via SSH
+
+After you have created a droplet you can connect to it via SSH by running the following command: 
+```
+ssh -i .ssh/2420assign1 arch@your-droplets-ip-address
+```
+- Replace **your-droplets-ip-address** with the actual ip adress that you just created from step 3.
+
+Output will look like this:
+
+![connect](assets/connet.png)
+
+
+## 5. Installing `doctl` Command-line Tool
 
 ### What is `doctl`
 
 - `doctl` is the official DigitalOcean command line interface (CLI). It allows you to interact with the DigitalOcean API via the command line. 
 
 ### Why Install `doctl`
-- It supports most functionality found in the control panel. You can create, configure, and destroy DigitalOcean resources like Droplets, Kubernetes clusters, firewalls, load balancers, database clusters, domains, and more.
-https://docs.digitalocean.com/reference/doctl/
+- With doctl, you can create, configure, and manage DigitalOcean resources like Droplets, Kubernetes clusters, firewalls, load balancers, database clusters, domains, and more. 
 
-1. To install the latest version of doctl using Homebrew on macOS, run:
-```
-brew install doctl
-```
-- You can check if doctl has been installed on your system, by running the following command in your terminal:
-```
-doctl version
-```
-![doctl](assets/view-doctl.png)
+1. Before installing doctl, make sure you have successfully connected to your Arch Linux droplet using your private key from Step 4.
 
-2. Create an API token
+2. Update the system package database and upgrade all the installed packages
+```
+sudo pacman -Syu
+```
+3. Install `doctl` from the Arch User Repository (AUR) using the `yay` package manager
+
+- Installs all the necessary tools required to build and install AUR packages.
+```
+sudo pacman -S --needed base-devel git
+```
+Output will look like this:
+
+![AUR](assets/doctl1.png)
+
+- Clone the `yay` AUR Repository to downloads the source code of the yay package to your local system.
+```
+git clone https://aur.archlinux.org/yay.git
+```
+- Navigate to the `yay` Directory to run the next command and build the yay package.
+```
+cd yay
+```
+- Build and Install yay
+```
+makepkg -si
+```
+Output will look like this:
+
+![yay2](assets/yay2.png)
+
+- Once you have `yay` installed, you can use it to install the doctl package from the AUR:
+```
+yay -S doctl
+```
+Output will look like this:
+
+![install](assets/instal-doctl.png)
+
+You may wonder why we are installing `doctl` using AUR and `yay`?
+
+-Since doctl is not included in the official Arch Linux repositories, we need to use the AUR to install it. AUR helpers like yay make it easier to install and manage these packages, so you don't have to manually download and compile them.
+
+4. Create an API token
 - Create a [DigitalOcean API token](https://docs.digitalocean.com/reference/api/create-personal-access-token/) for your account with read and write access from the Applications & API page in the control panel. The token string is only displayed once, so save it in a safe place
 
 ![token](assets/token.png)
 
-3. To initialize doctl with the API Token, run the following command:
+5. Initialize doctl with the API Token by running the following command:
 ```
 doctl auth init 
 ```
 You will be prompted to enter your API token. Paste the token you copied earlier into the terminal.
 
-![init doctl](assets/init-doctl.png)
+![init doctl](assets/auth.png)
 
-4. Validate that doctl is working
+6. Validate that doctl is working
 
 To confirm that you have successfully authorized doctl, review your account details by running:
 ```
 doctl account get
 ```
 If successful, the output looks like:
-```
-Email                      Droplet Limit    Email Verified    UUID                                        Status
-sammy@example.org          10               true              3a56c5e109736b50e823eaebca85708ca0e5087c    active
-```
-For example: 
 
-![doctl account](assets/doctl-account-get.png)
+![doctl account](assets/account.png)
 
 ## 5. Creating cloud-init file
 
@@ -222,11 +258,30 @@ For example:
 - Cloud-init allows us to set up a server with initial configurations quickly. For instance, after creating and connecting to servers, we often need to run a few commands to update and install packages. While this will not take long time for one server, configuring 10 or 100 servers can be time-consuming.
 - The easiest way to apply server configurations with cloud-init is through a config file, which is simply a YAML file. YAML is a human-friendly data serialization language for all programming languages.This allows for automated and consistent setup across multiple servers, saving time and reducing manual effort.
 
-1. To Create a Cloud-Init FIle:
-While logged into your droplet, use a text editor to create a new file named cloud-init.yaml. You can use nano, vim, or any other text editor you prefer. For example:
+ Before create a Cloud-Init file, If you do not have nano or vim installed, You can install one of these text editors using the package manager. Here’s how to do it:   
+ 1. Update the package list:
+ ```
+ sudo pacman -Syu
+```
+2. Install nano or vim:
+- To install nano, run:
+```
+sudo pacman -S nano
+```
+- To install vim, run"
+```
+sudo pacman -S vim
+```
+Now you can create the cloud-init file by running 
+```
+vim cloud-init.yaml
+```
+OR 
+
 ```
 nano cloud-init.yaml
 ```
+
 2. In the cloud-init.yaml file, you will define the settings you want for your droplet. Simply copy and paste the following example into your cloud-init configuration file and make changes as needed. 
 ```
 #cloud-config
