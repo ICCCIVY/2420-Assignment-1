@@ -24,9 +24,9 @@ StudentID: A01338328
 
 - You have a DigitalOcean account.
 
-- You have a Basic knowledge of Linux.
+- You have a basic knowledge of Linux.
 
-- Yoy have download the appropriate [Arch Linux](https://gitlab.archlinux.org/archlinux/arch-boxes/-/packages/)  image.  You want the most recent "cloudimg". The ".qcow2" like in the image below, the date may be different. Download the most recent image.  
+- You have downloaded the appropriate [Arch Linux](https://gitlab.archlinux.org/archlinux/arch-boxes/-/packages/)  image.  You want the most recent "cloudimg". The ".qcow2" like in the image below, the date may be different. Download the most recent image.  
 
 ![Arch Image](assets/arch-linux.png)
 
@@ -45,6 +45,8 @@ StudentID: A01338328
 6. Creating Cloud-Init File
 
 7. Creating a Droplet Using `doctl` with the Cloud-Init File
+
+8. Resources
 
 
 ## 1. Creating an SSH key pair on your Local Machine
@@ -111,7 +113,8 @@ pbcopy < ~/.ssh/2420assign1.pub
 
 In this step, you will create a project in DigitalOcean to organize your resources. You will also create a droplet, which is a virtual private server that will run your applications.
 
-To create project: 
+Creating a project: 
+
 1. In the DigitalOcean dashboard, click on **+ New Project** located on the left side bar. 
 
 2. In the **Project Name** field, enter a name for your project.
@@ -123,7 +126,7 @@ To create project:
 
 ![project](assets/create-project.png)
 
-To created a droplet:
+Creating a droplet:
 
 1. From your project dashboard, click the **Create** button and select **Droplets** in the dropdown menu. 
 
@@ -237,7 +240,7 @@ If successful, the output looks like:
 
 ### Why use Cloud-init?
 - Cloud-init allows us to set up a server with initial configurations quickly. For instance, after creating and connecting to servers, we often need to run a few commands to update and install packages. While this will not take long time for one server, configuring 10 or 100 servers can be time-consuming.
-- The easiest way to apply server configurations with cloud-init is through a config file, which is simply a YAML file. YAML is a human-friendly data serialization language for all programming languages.This allows for automated and consistent setup across multiple servers, saving time and reducing manual effort.
+- The easiest way to apply server configurations with cloud-init is through a configuration file written in YAML format. YAML is a human-friendly data serialization language for all programming languages.This allows for automated and consistent setup across multiple servers, saving time and reducing manual effort.
 
 1. Before creating a cloud-init file, install a text editor like Vim or Nano.  
 
@@ -350,7 +353,7 @@ Once the droplet is created and active, you can connect to it using SSH with the
 ssh -i .ssh/2420assign1 arch@your-droplets-ip-address
 ```
 - Replace **your-droplets-ip-address** with the public IP address of your new droplet.
-- Make sure to type `exit` and press `enter` to exit your previous SSH connect. 
+- Make sure to type `exit` and press `enter` to logout your previous SSH connect. 
 
 Output will look like this:
 
@@ -360,11 +363,25 @@ Output will look like this:
 Congratulations! You have successfully created a new DigitalOcean droplet using the doctl command-line tool and your cloud-init configuration. 
 
 ## Resources
-[What is SSH?](https://www.cloudflare.com/learning/access-management/what-is-ssh/)
+1. [What is SSH?](https://www.cloudflare.com/learning/access-management/what-is-ssh/)
 
-[doctl Command Line Interface (CLI)](https://docs.digitalocean.com/reference/doctl/)  
+2. [Arch Linux Wiki: SSH Keys](https://wiki.archlinux.org/title/SSH_keys)
 
-[Cloud-init documentation](https://docs.cloud-init.io/en/latest/index.html)
+3. [doctl Command Line Interface (CLI)](https://docs.digitalocean.com/reference/doctl/)  
+
+4. [ArchWiki: AUR Helpers](https://wiki.archlinux.org/title/AUR_helpers)
+
+5. [ArchWiki: Arch User Repository](https://wiki.archlinux.org/title/Arch_User_Repository)
+
+6. [`yay` GitHub Repository](https://github.com/Jguer/yay)
+
+7. [DigitalOcean Documentation. API Authentication.](https://docs.digitalocean.com/reference/api/create-personal-access-token/)
+
+8. [Cloud-init documentation](https://docs.cloud-init.io/en/latest/index.html)
+
+9. [Arch Linux Wiki： Cloud-init ](https://wiki.archlinux.org/title/Cloud-init)
+
+
 
 
 
