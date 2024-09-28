@@ -213,7 +213,7 @@ You may wonder why we are installing `doctl` using AUR and `yay`?
 - Since doctl is not included in the official Arch Linux repositories, we need to use the AUR to install it. AUR helpers like yay make it easier to install and manage these packages, so you don't have to manually download and compile them.
 
 4. Create an API token
-- Create a [DigitalOcean API token](https://docs.digitalocean.com/reference/api/create-personal-access-token/) for your account with read and write access from the Applications & API page in the control panel. The token string is only displayed once, so save it in a safe place
+- Create a [DigitalOcean API token](https://docs.digitalocean.com/reference/api/create-personal-access-token/) for your account with read and write access from the Applications & API page in the control panel. The token is only displayed once, so save it in a safe place.
 
 ![token](assets/token.png)
 
@@ -379,7 +379,7 @@ Congratulations! You have successfully created a new DigitalOcean droplet using 
 
 8. [Cloud-init documentation](https://docs.cloud-init.io/en/latest/index.html)
 
-9. [Arch Linux Wiki： Cloud-init ](https://wiki.archlinux.org/title/Cloud-init)
+9. [Arch Linux Wiki：Cloud-init ](https://wiki.archlinux.org/title/Cloud-init)
 
 
 
